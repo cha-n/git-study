@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+
+
+    <title>상세 페이지</title>
+
+    <style>
+        * {
+            font-family: 'Nanum Brush Script', cursive;
+        }
+
+        .info {
+            padding: 30px;
+            width: 900px;
+            margin: auto;
+        }
+
+        .image {
+            width: 600px;
+            height: 400px;
+            margin: auto;
+            background-image: url("https://cdn.pixabay.com/photo/2015/10/12/14/54/coffee-983955_1280.jpg");
+            background-position: center;
+            /*적정 스케일로 자름*/
+            background-size: cover;
+        }
+
+        .desc {
+            width: 600px;
+            /* margin: 상하 좌우 */
+            margin: 15px auto;
+        }
+
+        .order-details {
+            width: 600px;
+            margin: auto;
+        }
+
+       .orders {
+           width: 600px;
+           margin: 70px auto;
+       }
+
+        .price {
+            font-size: 15px;
+        }
+
+        .mybtn {
+            width: 100px;
+            margin: auto;
+            display: block;
+        }
+
+        #rate {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+<div class="info">
+    <div class="image"></div>
+
+    <div class="desc">
+        <h1>커피 <span class="price">가격 : 2,500원</span></h1>
+        <h4>부드러운 커피 팝니다</h4>
+    </div>
+
+    <div class="order-details">
+        <div id="rate"></div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">주문자 이름</span>
+            </div>
+            <input type="text" id="input-name" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="input-qty">수량</label>
+            </div>
+            <select class="custom-select" id="input-qty">
+                <option selected value="">-- 수량을 선택하세요 --</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default2">주소</span>
+            </div>
+            <input type="text" id="input-address" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default3">전화번호</span>
+            </div>
+            <input type="text" id="input-phone" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default">
+        </div>
+        <!--주문하기 버튼-->
+        <button type="button" class="btn btn-primary mybtn" onClick="order()">주문하기</button>
+    </div>
+
+    <div class="orders">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">이름</th>
+                <th scope="col">수량</th>
+                <th scope="col">주소</th>
+                <th scope="col">전화번호</th>
+            </tr>
+            </thead>
+            <tbody id="orders-box">
+            <tr>
+                <td>박르탄</td>
+                <td>3</td>
+                <td>스파르타국 코딩시 프론트구</td>
+                <td>010-1234-5678</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script>
+    function order() {
+        let name = $('#input-name').val()
+        let qty = $('#input-qty').val()
+        let address = $('#input-address').val()
+        let phone = $('#input-phone').val()
+
+        let regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+
+
+        if (name === '') {
+            alert('이름을 입력하세요')
+            $('#input-name').focus()
+        } else if (qty === '') {
+            alert('수량을 선택하세요')
+            $('#inputGroupSelect01').focus()
+        } else if (address === '') {
+            alert('주소를 입력하세요')
+            $('#input-address').focus()
+        } else if (phone === '') {
+            alert('전화번호를 입력하세요')
+            $('#input-phone').focus()
+        } else if (!regExp.test(phone)) {
+            alert('XXX-XXX(X)-XXXX 형식에 맞춰 입력하세요.')
+            $('#input-phone').focus()
+        } else alert("주문이 완료되었습니다.")
+
+        // console.log(name, qty, address, phone)
+
+        $.ajax({
+            type: "POST",
+            url: "/order",
+            data: {
+                'name': name,
+                'qty': qty,
+                'address': address,
+                'phone': phone
+            },
+            success: function (response) {
+                if (response["result"] === "success") {
+                    window.location.reload();
+                }
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        $('#orders-box').html("")
+        showOrders()
+        showExchange()
+
+    });
+
+    function showExchange() {
+        $.ajax({
+            type: "GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            success: function (res) {
+                let rate = res[1]['rate']
+                let rate_html = `<h6>달러-원 환율 : ${rate}원</h6>`
+                $('#rate').append(rate_html)
+            }
+        })
+    }
+
+    function showOrders() {
+        $.ajax({
+            type: "GET",
+            url: "/order",
+            data: {},
+            success: function (response) {
+                if (response["result"] === "success") {
+                    let orders = response['orders']
+                    for (let i = 0; i < orders.length; i++) {
+                        let order = orders[i];
+                        console.log(orders)
+
+                        let name = order['name']
+                        let qty = order['qty']
+                        let address = order['address']
+                        let phone = order['phone']
+
+                        let tempHtml = `<tr>
+                                            <td>${name}</td>
+                                            <td>${qty}</td>
+                                            <td>${address}</td>
+                                            <td>${phone}</td>
+                                        </tr>`
+
+                        $('#orders-box').append(tempHtml)
+                    }
+
+                } else {
+                    alert("리뷰를 받아오지 못했습니다");
+                }
+            }
+        })
+    }
+</script>
+</body>
+
+</html>
+<!--이미지 출처 : https://pixabay.com/photos/coffee-cafe-mug-decorative-drink-983955/-->
