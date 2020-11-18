@@ -1,0 +1,9 @@
+.table {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.review-row {
+    margin: 20px 0px;
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+
+    <title>책 검색</title>
+    <style>
+        .table {
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">제목</span>
+    </div>
+    <input type="text" id="book-title" class="form-control" aria-label="Sizing example input"
+           aria-describedby="inputGroup-sizing-sm">
+    <div>
+        <button type="button" class="btn btn-primary" onclick="searchByTitle()">검색</button>
+    </div>
+</div>
+<div class="input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">저자</span>
+    </div>
+    <input type="text" id="book-author" class="form-control" aria-label="Sizing example input"
+           aria-describedby="inputGroup-sizing-sm">
+    <div>
+        <button type="button" class="btn btn-primary" onclick="searchByAuthor()">검색</button>
+    </div>
+</div>
+<div class="bookList">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">제목</th>
+            <th scope="col">저자</th>
+            <th scope="col">출판사</th>
+            <th scope="col">썸네일</th>
+        </tr>
+        </thead>
+        <tbody id="searchedBookList">
+
+        </tbody>
+    </table>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script>
+    function searchByTitle() {
+        bookTitle = $('#book-title').val()
+        console.log(bookTitle)
+        $('#searchedBookList').html("")
+        $.ajax({
+            method: "GET",
+            url: "https://dapi.kakao.com/v3/search/book?target=title",
+            data: {
+                'query': bookTitle
+            },
+            headers: {
+                Authorization: "KakaoAK 2ed66440612b7d58fec40e64278e1f9a"
+            }
+        })
+            .done(function (msg) {
+                console.log(msg)
+                console.log(msg.documents)
+                for (let i = 0; i < msg.documents.length; i++) {
+                    let temp = `<tr onclick="post_bookInfo('${msg.documents[i].title}', '${msg.documents[i].authors}', '${msg.documents[i].publisher}', '${msg.documents[i].thumbnail}')">
+                                    <td>${msg.documents[i].title}</td>
+                                    <td>${msg.documents[i].authors}</td>
+                                    <td>${msg.documents[i].publisher}</td>
+                                    <td><img src="${msg.documents[i].thumbnail}"/></td>
+                                </tr>`
+                    $('#searchedBookList').append(temp)
+                }
+            });
+    }
+
+    function searchByAuthor() {
+        bookTitle = $('#book-author').val()
+        $('#searchedBookList').html("")
+        $.ajax({
+            method: "GET",
+            url: "https://dapi.kakao.com/v3/search/book?target=authors",
+            data: {
+                'query': bookTitle
+            },
+            headers: {
+                Authorization: "KakaoAK 2ed66440612b7d58fec40e64278e1f9a"
+            }
+        })
+            .done(function (msg) {
+                console.log(msg)
+                console.log(msg.documents)
+                for (let i = 0; i < msg.documents.length; i++) {
+                    let temp = `<tr>
+                                    <td>${msg.documents[i].title}</td>
+                                    <td>${msg.documents[i].authors}</td>
+                                    <td>${msg.documents[i].publisher}</td>
+                                    <td><img src="${msg.documents[i].thumbnail}"/></td>
+                                </tr>`
+                    $('#searchedBookList').append(temp)
+                }
+            });
+    }
+
+    function post_bookInfo(title, author, publisher, thumbnail) {
+        console.log("post")
+        console.log(title, author, publisher, thumbnail)
+
+        $.ajax({
+            type: "POST",
+            url: "/write",
+            data: {
+                'title': title,
+                'author': author,
+                'publisher': publisher,
+                'thumbnail': thumbnail
+            },
+            success: function (response) {
+                if (response["result"] === "success") {
+                    console.log("post_bookInfo Success")
+
+                }
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

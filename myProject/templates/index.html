@@ -1,0 +1,25 @@
+{% include 'head.html' %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <!-- Navbar content -->
+</nav>
+
+<div class="container">
+    <!--    <button type="button" class="btn btn-light">작성하기</button>-->
+    <a href="http://localhost:5000/write" class="btn btn-primary">작성하기</a>
+    <div id="reviews-container">
+    </div>
+
+</div>
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        getReview();
+        console.log("ready")
+        // index.html 로드가 완료되면 자동으로 showStar() 함수를 호출합니다.
+
+    });
+</script>
+{% include 'footer.html' %}

@@ -1,0 +1,52 @@
+<!-- Modal -->
+<div class="modal fade" id="search" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+            </div>
+            <div class="modal-body">
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">제목</span>
+                    </div>
+                    <input type="text" id="book-title" class="form-control" aria-label="Sizing example input"
+                           aria-describedby="inputGroup-sizing-sm">
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="searchByTitle()">검색</button>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">저자</span>
+                    </div>
+                    <input type="text" id="book-author" class="form-control" aria-label="Sizing example input"
+                           aria-describedby="inputGroup-sizing-sm">
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="searchByAuthor()">검색</button>
+                    </div>
+                </div>
+                <div class="bookList">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">제목</th>
+                            <th scope="col">저자</th>
+                            <th scope="col">출판사</th>
+                            <th scope="col">썸네일</th>
+                        </tr>
+                        </thead>
+                        <tbody id="searchedBookList">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
