@@ -10,7 +10,7 @@ function searchByTitle() {
             'query': bookTitle
         },
         headers: {
-            Authorization: "KakaoAK "+config.apiKey
+            Authorization: "KakaoAK "+ API_KEY
         }
     })
         .done(function (msg) {
