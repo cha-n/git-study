@@ -6,6 +6,7 @@ app = Flask(__name__)
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
+
 # method 명시되어 있지 않으면 GET, POST 모두 가능
 @app.route('/')
 def home():
@@ -15,6 +16,7 @@ def home():
 @app.route('/write', methods=['GET'])
 def write_form():
     return render_template('write.html')
+
 
 @app.route('/write', methods=['POST'])
 def write_review():
@@ -37,23 +39,43 @@ def write_review():
     db.booked.insert_one(doc)
     return jsonify({'result': 'success', 'msg': '리뷰가 작성되었습니다!'})
 
+
 @app.route('/review', methods=['GET'])
-def read_reviews():
-    review_list = list(db.booked.find({}, {'_id': False}))
+def read_all_reviews():
+    title = request.args.get('title', 'all')
+    print(title)
+    filter = {}
+    if title != 'all':
+        filter = {"title": title}
+
+    review_list = list(db.booked.find(filter, {'_id': False}))
     print(review_list)
+
     return jsonify({'result': 'success', 'reviews': review_list})
 
 
-# @app.route('/review', methods=['POST'])
-# def write_review():
-#     title = request.form['title']
-#     print(title)
-#     return jsonify({'result': 'success', 'msg': '리뷰가 작성되었습니다!'})
+@app.route('/viewReview', methods=['GET'])
+def read_review():
+    title = request.args.get('title')
+
+
+    return render_template('readReview.html', title=title)
+
+
+# index.html에서 책 클릭할 때 책 정보 가져옴
+@app.route('/viewReview', methods=['POST'])
+def get_title():
+    title = request.form['title']
+    print(title)
+    review = list(db.booked.find({'title': title}, {'_id': False}))
+    print(review)
+    return jsonify({'result': 'success', 'reviews': review})
 
 
 @app.route('/search_popup')
 def search_popup():
     return render_template('search_popup.html')
+
 
 @app.route('/test', methods=['GET'])
 def test_get():
@@ -69,9 +91,5 @@ def test_post():
     return jsonify({'result': 'success', 'msg': '이 요청은 POST!'})
 
 
-
-
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
-

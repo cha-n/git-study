@@ -1,4 +1,4 @@
-
+// 도서 검색_책 이름으로 검색
 function searchByTitle() {
     bookTitle = $('#book-title').val()
     console.log(bookTitle)
@@ -58,6 +58,8 @@ function searchByAuthor() {
         });
 }
 
+
+// 검색 결과로 나온 책 중 원하는 책 선택
 function select_book(book) {
     console.log("post select_book")
     console.log(book)
@@ -67,25 +69,9 @@ function select_book(book) {
     $('#book-thumbnail-form').val(book['thumbnail']);
     $('#book-author_form').val(book['authors']);
     $('#book-publisher_form').val(book['publisher']);
-
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/write",
-    //     data: {
-    //         'title': book['title'],
-    //         'author': book['author'],
-    //         'publisher': book['publisher'],
-    //         'thumbnail': book['thumbnail']
-    //     },
-    //     success: function (response) {
-    //         if (response["result"] === "success") {
-    //             console.log("post_bookInfo Success")
-    //
-    //         }
-    //     }
-    // })
 }
 
+// 리뷰 작성
 function writeReview() {
     let title = $('#book-title_form').val();
     let thumbnail = $('#book-thumbnail-form').val();
@@ -128,7 +114,7 @@ function writeReview() {
 }
 
 
-function getReview() {
+function getReviews() {
     $.ajax({
         type: 'GET',
         url: '/review',
@@ -155,7 +141,7 @@ function getReview() {
                         console.log(temp)
                     }
 
-                    let temp = `<div class="col-12 col-sm-6 col-md-4">
+                    let temp = `<div class="col-12 col-sm-6 col-md-4" onclick="location.href='/viewReview?title=${title}'" style="cursor:pointer;">
                                     <div class="card">
                                         <img src="${thumbnail}" class="card-img-top" width="100%" height="100%">
                                         <div class="card-body">
@@ -164,6 +150,17 @@ function getReview() {
                                         </div>
                                     </div>
                                 </div>`
+
+
+                    // let temp = `<div class="col-12 col-sm-6 col-md-4" onclick="postTitle('${title}')">
+                    //                 <div class="card">
+                    //                     <img src="${thumbnail}" class="card-img-top" width="100%" height="100%">
+                    //                     <div class="card-body">
+                    //                         <h5 class="card-title">${title}</h5>
+                    //                         <p class="card-text">${review}</p>
+                    //                     </div>
+                    //                 </div>
+                    //             </div>`
 
 
                     console.log(parseInt(i/3))
@@ -175,5 +172,24 @@ function getReview() {
     });
 }
 
+// 책 제목 전송
+function postTitle(title) {
+    console.log("postTitle")
+    console.log(title)
+
+     $.ajax({
+        type: "POST",
+        url: "/viewReview",
+        data: {
+            'title': title
+        },
+        success: function (response) {
+            if (response["result"] === "success") {
+                console.log("success")
+            }
+        }
+    })
+
+}
 
 

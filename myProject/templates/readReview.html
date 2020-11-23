@@ -1,0 +1,63 @@
+{% include 'head.html' %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <!-- Navbar content -->
+    </nav>
+<div id="title" style="display: none">{{title}}</div>
+<form>
+    <div class="container">
+        <!--                <a href="http://localhost:5000/search_popup" class="btn btn-light" onclick="window.open(this.href, '_blanck', 'width=600, height=400'); return false">도서 찾기</a>-->
+        <!-- Button trigger modal -->
+
+
+        <div class="form-group">
+            <label for="book-title_form">제목</label>
+            <input type="text" class="form-control" id="book-title_form" readonly>
+        </div>
+        <div class="form-group">
+            <label for="book-author_form">저자</label>
+            <input type="text" class="form-control" id="book-author_form" readonly>
+        </div>
+        <div class="form-group">
+            <label for="book-publisher_form">출판사</label>
+            <input type="text" class="form-control" id="book-publisher_form" readonly>
+        </div>
+        <div class="form-group">
+            <label for="book-review_form">리뷰</label>
+            <input type="textarea" class="form-control" id="book-review_form" readonly>
+        </div>
+        <input type="hidden" class="form-control" id="book-thumbnail-form">
+
+    </div>
+
+</form>
+
+</div>
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        // getReview();
+        let title = $('#title').text()
+        console.log("ready", title)
+        $.ajax({
+        type: 'GET',
+        url: '/review?title='+title,
+        data: {},
+        success: function (response) {
+            if (response['result'] == 'success') {
+                console.log("success")
+                console.log(response['reviews'][0])
+                let review = response['reviews'][0]
+                $('#book-title_form').val(review['title'])
+                $('#book-author_form').val(review['author'])
+                $('#book-publisher_form').val(review['publisher'])
+                $('#book-review_form').val(review['review'])
+
+                }
+            }
+        })
+    });
+</script>
+{% include 'footer.html' %}
