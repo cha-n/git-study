@@ -93,6 +93,7 @@ function writeReview() {
         alert('review를 입력해주세요.')
         $('#book-review').focus()
     }
+    console.log("ffffffff")
     $.ajax({
         type: "POST",
         url: "/write",
@@ -105,13 +106,9 @@ function writeReview() {
         },
         success: function(response) {
             console.log(response)
-            //location.window.href = "http://localhost:5000";
             if (response["result"] === "success") {
-
                 console.log("success")
-                //location.window.href = "http://localhost:5000";
-                // alert(response["msg"]);
-                //window.location.reload();
+                location.href="/"
             }
         }
     })
@@ -194,6 +191,27 @@ function postTitle(title) {
         }
     })
 
+}
+
+function deleteReview(){
+    console.log("deleteReview")
+    title = $('#book-title_form').val()
+    console.log(title)
+    $.ajax({
+        type: "POST",
+        url: "/deleteReview",
+        data: {
+            'title': title
+        },
+        success: function (response) {
+            if (response["result"] === "success") {
+                console.log("success")
+                // window.href="http://localhost:5000/"
+                alert("리뷰가 삭제되었습니다.")
+                location.href="/"
+            }
+        }
+    })
 }
 
 

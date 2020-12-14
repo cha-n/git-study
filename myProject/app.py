@@ -37,6 +37,7 @@ def write_review():
     }
 
     db.booked.insert_one(doc)
+    print(doc)
     return jsonify({'result': 'success', 'msg': '리뷰가 작성되었습니다!'})
 
 
@@ -57,8 +58,6 @@ def read_all_reviews():
 @app.route('/viewReview', methods=['GET'])
 def read_review():
     title = request.args.get('title')
-
-
     return render_template('readReview.html', title=title)
 
 
@@ -75,6 +74,15 @@ def get_title():
 @app.route('/search_popup')
 def search_popup():
     return render_template('search_popup.html')
+
+# 리뷰 삭제
+@app.route('/deleteReview', methods=['POST'])
+def delete_review():
+    print("deleteReview")
+    title = request.form['title']
+    print(title)
+    delete = db.booked.delete_one({"title": title})
+    return jsonify({'result': 'success', 'msg': '리뷰가 작성되었습니다!'})
 
 
 @app.route('/test', methods=['GET'])
