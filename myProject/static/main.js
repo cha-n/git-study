@@ -106,6 +106,7 @@ function writeReview() {
         success: function (response) {
             if (response["result"] === "success") {
                 console.log("success")
+                location.window.href = "http://localhost:5000";
                 // alert(response["msg"]);
                 //window.location.reload();
             }
