@@ -103,10 +103,13 @@ function writeReview() {
             'publisher': publisher,
             'review': review
         },
-        success: function (response) {
+        success: function(response) {
+            console.log(response)
+            //location.window.href = "http://localhost:5000";
             if (response["result"] === "success") {
+
                 console.log("success")
-                location.window.href = "http://localhost:5000";
+                //location.window.href = "http://localhost:5000";
                 // alert(response["msg"]);
                 //window.location.reload();
             }
@@ -146,8 +149,8 @@ function getReviews() {
                                     <div class="card">
                                         <img src="${thumbnail}" class="card-img-top" width="100%" height="100%">
                                         <div class="card-body">
-                                            <h5 class="card-title">${title}</h5>
-                                            <p class="card-text">${review}</p>
+                                            <h5 class="card-title" style="text-align: center">${title}</h5>
+<!--                                            <p class="card-text">${review}</p>-->
                                         </div>
                                     </div>
                                 </div>`
