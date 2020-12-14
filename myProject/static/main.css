@@ -1,0 +1,13 @@
+input[readonly].classname {
+    background-color: transparent;
+    border: 0;
+    font-size: 1em;
+}
+
+* {
+    font-family: 'Jua', sans-serif;
+}
+
+.form-control:disabled, .form-control[readonly]{
+    background-color: #EFF6FB;
+}
